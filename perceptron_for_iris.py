@@ -11,5 +11,4 @@ per_clf = Perceptron()
 per_clf.fit(X, y)
 y_pred = per_clf.predict([[2, 0.5]])
 
-if __name__ == "__main__":
-    print(y_pred)
+print(y_pred)
