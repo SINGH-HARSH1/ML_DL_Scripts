@@ -19,3 +19,24 @@ print("X_train_full Datatype: ", X_train_full.dtype)
 # and converted them to Float.
 X_valid, X_train = X_train_full[:5000]/255.0, X_train_full[5000:]/255.0
 y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
+
+class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
+               "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
+
+print(class_names[y_train[0]])
+print("_____________________________________________")
+# Creating a Model Using Sequential API
+model = keras.models.Sequential()
+model.add(keras.layers.Flatten(input_shape=[28, 28]))
+model.add(keras.layers.Dense(300, activation='relu'))
+model.add(keras.layers.Dense(100, activation='relu'))
+model.add(keras.layers.Dense(10, activation='softmax'))
+
+print(model.layers)
+print(model.summary())
+
+# Compiling the Model
+model.compile(loss="sparse_categorical_crossentropy", optimizer='sgd', metrics=["accuracy"])
+
+
+
