@@ -1,5 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -41,7 +42,7 @@ print(model.summary())
 model.compile(loss="sparse_categorical_crossentropy", optimizer='sgd', metrics=["accuracy"])
 
 # Training the Model
-history = model.fit(X_train, y_train, epochs=150, validation_data=(X_valid, y_valid))
+history = model.fit(X_train, y_train, epochs=50, validation_data=(X_valid, y_valid))
 
 print("____________________________________________________________________________________________________")
 pd.DataFrame(history.history).plot(figsize=(8, 5))
