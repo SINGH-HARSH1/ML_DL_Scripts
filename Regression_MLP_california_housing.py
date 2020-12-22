@@ -1,8 +1,7 @@
 from sklearn.datasets import fetch_california_housing
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
-import tensorflow as tf
-from tensorflow.keras.layers import Dense
+from tensorflow import keras
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -21,14 +20,15 @@ X_valid = scaler.transform(X_valid)
 X_test = scaler.transform(X_test)
 
 # Creating a Sequential Model
-model = tf.keras.models.Sequential()
-model.add(Dense(units=30, activation=tf.keras.activations.relu, input_shape=X_train[1:]))
-model.add(Dense(units=1))
-
-model.compile(loss=tf.keras.losses.mean_squared_error, optimizer=tf.keras.optimizers.SGD)
-
-# Model Fitted For Training.
-history = model.fit(X_train, y_train, epochs=30, validation_data=(X_valid, y_valid))
+model = keras.models.Sequential([
+    keras.layers.Dense(30, activation="relu", input_shape=X_train.shape[1:]),
+    keras.layers.Dense(1)
+])
+model.compile(loss="mean_squared_error", optimizer=keras.optimizers.SGD(lr=1e-3))
+history = model.fit(X_train, y_train, epochs=20, validation_data=(X_valid, y_valid))
+mse_test = model.evaluate(X_test, y_test)
+X_new = X_test[:3]
+y_pred = model.predict(X_new)
 
 print("______________________________________________________________________________________________")
 # Plotting the MODEL HISTORY
@@ -49,5 +49,4 @@ X_new = X_test[:3]
 y_pred = model.predict(X_new)
 print(y_pred)
 print("______________________________________________________________________________________________")
-if __name__ == "__main__":
-    print(housing.keys())
+
